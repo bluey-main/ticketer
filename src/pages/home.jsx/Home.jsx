@@ -7,12 +7,11 @@ import Nav from "../../components/Nav";
 import busTerminal from "../../assets/bus-terminal-2.jpg";
 import { Button, Option, Select } from "@material-tailwind/react";
 
-
 const Home = () => {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
   const [user, setUser] = useState(null);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
 
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (user) => {
@@ -40,13 +39,10 @@ const Home = () => {
           ) {
             // Navigate to Userdetails component if first name is missing
             navigate("/userdetails");
-          }else{
+          } else {
             setUserName(data["first_name"] + " " + data["last_name"]);
           }
         }
-        
-        
-
       } catch (error) {
         console.log(error);
       }
@@ -67,7 +63,7 @@ const Home = () => {
 
   return (
     <div>
-    <Nav userName={userName}/>
+      <Nav userName={userName} />
       {/* <h1>Home</h1>
       {user? <p>Welcome {user.email}</p> : <p>Loading...</p>} */}
       <div className="w-full h-screen bg-orange-3 flex justify-center">

@@ -8,6 +8,7 @@ import Home from "./pages/home.jsx/Home";
 import PrivateRoute from "./pages/authpage/PrivateRoute";
 import AuthProvider from "./pages/authpage/Authprovider";
 import Userdetails from "./components/Userdetails";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/userdetails" element={<Userdetails />} />
+            <Route path="/admin" element={<Admin />} />
 
             <Route element={<PrivateRoute />}>
               <Route path="/" element={<Home />} />
