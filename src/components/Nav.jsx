@@ -56,7 +56,7 @@ const Nav = ({ userName }) => {
             src={hamburgerMenu}
             onClick={toggleDrawer}
             alt="hamburger menu"
-            className=" scale-50 lg:hidden block"
+            className=" size-8 lg:hidden block mr-4"
           />
         </ul>
 
