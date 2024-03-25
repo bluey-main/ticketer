@@ -2,10 +2,14 @@ import { Button } from "@material-tailwind/react";
 import { useContext } from "react";
 import { AuthContext } from "../pages/authpage/Authprovider";
 import spinner from "../assets/spinner.svg";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+import hamburgerMenu from "../assets/hamburgerMenu.svg";
+import { UseNavigationContext } from "../context/UseNavigationContext";
 
-const Nav = ({userName}) => {
+const Nav = ({ userName }) => {
   const { logOut, loading } = useContext(AuthContext);
+  const { toggleDrawer} = UseNavigationContext()
+
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
@@ -27,28 +31,44 @@ const Nav = ({userName}) => {
         <h1 className="text-3xl text-white">Ticketer</h1>
       </div>
       <div className="w-1/2 h-full bg-orange-4">
-        <ul className=" w-full h-full flex justify-end items-center pr-10 gap-x-10">
-            <li>
-                <p className="text-white text-xl"> <span className="font-bold">Hello,</span>{userName}</p>
-            </li>
+        <ul className=" w-full h-full flex justify-end items-center lg:pr-10 lg:gap-x-10">
+          <li className="lg:block hidden">
+            <p className="text-white text-xl">
+              {" "}
+              <span className="font-bold">Hello,</span>
+              {userName}
+            </p>
+          </li>
           <li>
             <Button
               variant="gradient"
               fullWidth
               color="white"
+              className="lg:block hidden"
               size="lg"
               onClick={() => handleSignOut()}
             >
               Sign Out
             </Button>
           </li>
+
+          <img
+            src={hamburgerMenu}
+            onClick={toggleDrawer}
+            alt="hamburger menu"
+            className=" scale-50 lg:hidden block"
+          />
         </ul>
+
+        {/* <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
+          <span onClick={closeDrawer}>|||</span>
+        </Drawer> */}
       </div>
     </nav>
   );
 };
 
 Nav.propTypes = {
-    userName: PropTypes.string.isRequired // Expecting userName prop to be a string and is required
+  userName: PropTypes.string.isRequired, // Expecting userName prop to be a string and is required
 };
 export default Nav;

@@ -9,34 +9,37 @@ import PrivateRoute from "./pages/authpage/PrivateRoute";
 import AuthProvider from "./pages/authpage/Authprovider";
 import Userdetails from "./components/Userdetails";
 import Admin from "./pages/Admin";
+import { NavigationProvider } from "./context/NavigationContext";
 
 function App() {
   return (
     <>
       <BrowserRouter>
         <AuthProvider>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/userdetails" element={<Userdetails />} />
-            <Route path="/admin" element={<Admin />} />
+          <NavigationProvider>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/userdetails" element={<Userdetails />} />
+              <Route path="/admin" element={<Admin />} />
 
-            <Route element={<PrivateRoute />}>
-              <Route path="/" element={<Home />} />
-            </Route>
-          </Routes>
+              <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+              </Route>
+            </Routes>
+          </NavigationProvider>
         </AuthProvider>
       </BrowserRouter>
     </>
