@@ -2,13 +2,15 @@ import { Button } from "@material-tailwind/react";
 import { useContext } from "react";
 import { AuthContext } from "../pages/authpage/Authprovider";
 import spinner from "../assets/spinner.svg";
-import PropTypes from "prop-types";
+
 import hamburgerMenu from "../assets/hamburgerMenu.svg";
 import { UseNavigationContext } from "../context/UseNavigationContext";
+import { useNavigate } from "react-router-dom";
 
-const Nav = ({ userName }) => {
+const Nav = () => {
   const { logOut, loading } = useContext(AuthContext);
   const { toggleDrawer} = UseNavigationContext()
+  const navigate = useNavigate();
 
   if (loading) {
     return (
@@ -27,18 +29,12 @@ const Nav = ({ userName }) => {
   };
   return (
     <nav className="w-full h-16 bg-black flex sticky top-0 z-50">
-      <div className="w-1/2 h-full bg-orange-2 flex items-center pl-10">
-        <h1 className="text-3xl text-white">Ticketer</h1>
+      <div className="w-[20%] h-full bg-orange-2 flex items-center pl-10">
+        <h1 className="text-3xl text-white cursor-pointer" onClick={() => navigate('/')}>Ticketer</h1>
       </div>
-      <div className="w-1/2 h-full bg-orange-4">
+      <div className="w-[80%] h-full bg-orange-4">
         <ul className=" w-full h-full flex justify-end items-center lg:pr-10 lg:gap-x-10">
-          <li className="lg:block hidden">
-            <p className="text-white text-xl">
-              {" "}
-              <span className="font-bold">Hello,</span>
-              {userName}
-            </p>
-          </li>
+        
           <li>
             <Button
               variant="gradient"
@@ -49,6 +45,19 @@ const Nav = ({ userName }) => {
               onClick={() => handleSignOut()}
             >
               Sign Out
+            </Button>
+          </li>
+
+          <li>
+            <Button
+              variant="gradient"
+              fullWidth
+              color="green"
+              className="lg:block hidden"
+              size="lg"
+              onClick={()=>navigate('/transactions')}
+            >
+              Transaction History
             </Button>
           </li>
 
@@ -68,7 +77,5 @@ const Nav = ({ userName }) => {
   );
 };
 
-Nav.propTypes = {
-  userName: PropTypes.string.isRequired, // Expecting userName prop to be a string and is required
-};
+
 export default Nav;

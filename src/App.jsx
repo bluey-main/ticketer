@@ -10,6 +10,8 @@ import AuthProvider from "./pages/authpage/Authprovider";
 import Userdetails from "./components/Userdetails";
 import Admin from "./pages/Admin";
 import { NavigationProvider } from "./context/NavigationContext";
+import Reciept from "./pages/Reciept";
+import Transactions from "./pages/Transactions";
 
 function App() {
   return (
@@ -34,7 +36,8 @@ function App() {
               <Route path="/register" element={<Register />} />
               <Route path="/userdetails" element={<Userdetails />} />
               <Route path="/admin" element={<Admin />} />
-
+              {/* <Route path="/rec" element={<Reciept />} /> */}
+              <Route path="/transactions" element={<Transactions />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
               </Route>

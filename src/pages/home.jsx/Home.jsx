@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import "../../App.css";
 
 import {
+  addDoc,
   collection,
   doc,
   getDoc,
@@ -24,11 +25,12 @@ import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
 import { UseNavigationContext } from "../../context/UseNavigationContext";
 import { AuthContext } from "../authpage/Authprovider";
+import DrawerComponent from "../../components/DrawerComponent";
 
 const Home = () => {
   const navigate = useNavigate();
   const [destination, setDestination] = useState("");
-  const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [userName, setUserName] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
   const [listOfBuses, setListOfBuses] = useState([]);
@@ -52,7 +54,7 @@ const Home = () => {
     onSuccess: (e) => {
       console.log(e);
       toast.success("Transaction Successful");
-      payForBus();
+      payForBus(e.status, e.trxref);
     },
     onClose: () => {
       toast.error("Transaction Canceled");
@@ -62,7 +64,7 @@ const Home = () => {
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        setUserId(user.uid);
         console.log(user.uid);
         checkIfUserDetailsArePresent(user.uid);
       } else {
@@ -76,7 +78,6 @@ const Home = () => {
         const documentSnapshot = await getDoc(documentRef);
         if (documentSnapshot.exists()) {
           const data = documentSnapshot.data();
-
           if (
             data["first_name"] == null ||
             data["last_name"] == null ||
@@ -137,9 +138,39 @@ const Home = () => {
     getBusDetails();
   }, [destination]);
 
-  const payForBus = async () => {
+  const payForBus = async (tranStatus, transRef ) => {
     try {
       const busCollectionRef = collection(db, "ticketer_buses");
+        const userDocumentRef = doc(db, "ticketer_user", userId);
+        const receiptCollectionRef = collection(userDocumentRef, 'reciept');
+        const getCurrentDate = () => {
+          const currentDate = new Date();
+          const year = currentDate.getFullYear();
+          const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
+          const day = currentDate.getDate();
+          return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+        };
+
+        const getCurrentTime = () => {
+          const currentTime = new Date();
+          const hours = currentTime.getHours();
+          const minutes = currentTime.getMinutes();
+          const seconds = currentTime.getSeconds();
+          return `${hours}:${minutes}:${seconds}`;
+        };
+
+        const currentTime = getCurrentTime();
+        const currentDate = getCurrentDate();
+
+         await addDoc(receiptCollectionRef, {
+          date: currentDate,
+          time:currentTime,
+          amount: paystackAmount,
+          status: tranStatus,
+          tranRef: transRef,
+          name: userName,
+          phone: phone,
+        })
       const querySnapshot = await getDocs(busCollectionRef);
       let busDocRef = null;
       let updatedSeatNumber = 0;
@@ -166,50 +197,15 @@ const Home = () => {
     }
   };
 
-  const handleSignOut = () => {
-    logOut();
-  };
+  // const handleSignOut = () => {
+  //   logOut();
+  // };
 
   return (
     <div>
-      <Drawer open={isDrawerOpen} onClose={toggleDrawer}>
-        <div className="w-full h-[10%] flex justify-between items-center bg-black">
-          <p className="text-white text-lg pl-3">{userName}</p>
-          <IconButton variant="text" color="white" onClick={toggleDrawer}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="size-10"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </IconButton>
-        </div>
-        <div className="w-full h-[30%] bg-red-4 px-5 flex items-end justify-end">
-          <Button
-            variant="gradient"
-            fullWidth
-            color="black"
-            className="h-16"
-            size="lg"
-            onClick={() => handleSignOut()}
-          >
-            Sign Out
-          </Button>
-        </div>
-      </Drawer>
+     <DrawerComponent  userName={userName}/>
+      <Nav/>
 
-      <Nav userName={userName} />
-
-      {/* <h1>Home</h1>
-      {user? <p>Welcome {user.email}</p> : <p>Loading...</p>} */}
       <div className="w-full h-screen bg-orange-3 flex justify-center">
         <div className="w-full h-[90%] bg-green-4 relative flex items-center flex-col">
           <div
