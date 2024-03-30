@@ -313,13 +313,13 @@ const Home = () => {
             <div className="lg:w-[60%] w-full h-full bg-teal-3">
               <div className="w-full h-1/2 bg-yellow-2 flex justify-center items-center">
                 <div className="w-1/2 h-full bg-orange-4 flex flex-col justify-center items-center text-white border-r border-r-white">
-                  <p className="text-2xl text-center font-bold">
+                  <p className="lg:text-2xl text-xl text-center font-bold">
                     Seats Available
                   </p>
                   <p className="text-xl ">{seatNumber}</p>
                 </div>
                 <div className="w-1/2 h-full bg-orange-2 flex flex-col justify-center items-center text-white">
-                  <p className="text-2xl text-center font-bold">Price</p>
+                  <p className="lg:text-2xl text-xl text-center font-bold">Price</p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
               </div>

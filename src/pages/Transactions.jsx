@@ -30,20 +30,9 @@ const Transactions = () => {
   const [selectedTransaction, setSelectedTransaction] = useState(null);
   const elementRef = useRef(null);
 
+
   const handleOpen = () => setOpen(!open);
 
-  const htmlToImageConvert = () => {
-    toPng(elementRef.current, { cacheBust: false })
-      .then((dataUrl) => {
-        const link = document.createElement("a");
-        link.download = "reciept.png";
-        link.href = dataUrl;
-        link.click();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
 
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (user) => {
@@ -84,6 +73,20 @@ const Transactions = () => {
     setSelectedTransaction(transaction);
     handleOpen();
   };
+
+  const htmlToImageConvert = () => {
+    toPng(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = `${selectedTransaction?.tranRef}.png`;
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   return (
     <div className="w-full relative overflow-x-hidden">
