@@ -86,14 +86,14 @@ const Transactions = () => {
   };
 
   return (
-    <>
-    <DrawerComponent userName={userId}/>
+    <div className="w-full relative overflow-x-hidden">
+      <DrawerComponent userName={userId} />
       <Nav />
-      <div className="w-full flex justify-center bg-orange- lg:px-36 px-6">
+      <div className="w-full flex justify-center bg-orange- lg:px-36">
         <table className="w-full">
           <thead>
             <tr>
-              <th>Transaction ID</th>
+              <th className="lg:block hidden">Transaction ID</th>
               <th>Amount</th>
               <th>Date</th>
               <th>Status</th>
@@ -103,11 +103,11 @@ const Transactions = () => {
           <tbody>
             {transactions.map((transaction, index) => (
               <tr
-              className="cursor-pointer"
+                className="cursor-pointer"
                 key={index}
                 onClick={() => handleTransactionClick(transaction)}
               >
-                <td className="flex items-center gap-x-2">
+                <td className="lg:flex hidden items-center gap-x-2">
                   {" "}
                   <div className="h-[50%] p-3 text-white bg-black rounded-lg">
                     {" "}
@@ -173,7 +173,7 @@ const Transactions = () => {
           </DialogFooter>
         </Dialog>
       </div>
-    </>
+    </div>
   );
 };
 
