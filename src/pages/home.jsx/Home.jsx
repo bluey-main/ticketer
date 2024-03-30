@@ -290,7 +290,7 @@ const Home = () => {
             }}
           ></div>
           <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[65%] bg-black absolute lg:bottom-36 bottom-28 lg:flex-row flex-col  flex p-11 rounded-lg">
-            <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white lg:border-b-transparent border-b border-b-white ">
+            <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white  ">
               <Select
                 label="Destination"
                 className=" bg-white border-white focus:border-white "

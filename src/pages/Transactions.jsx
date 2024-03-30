@@ -103,6 +103,7 @@ const Transactions = () => {
           <tbody>
             {transactions.map((transaction, index) => (
               <tr
+              className="cursor-pointer"
                 key={index}
                 onClick={() => handleTransactionClick(transaction)}
               >
