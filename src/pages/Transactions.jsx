@@ -66,7 +66,7 @@ const Transactions = () => {
       setUserId(data["first_name"] + " " + data["last_name"]);
       setPhone(data["phone"]);
       const recieptQuerySnapshot = await getDocs(
-        query(receiptCollectionRef, orderBy("date", "desc"))
+        query(receiptCollectionRef, orderBy("timestamp", "desc"))
       );
 
       const receiptData = recieptQuerySnapshot.docs.map((doc) => ({

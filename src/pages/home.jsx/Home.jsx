@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { auth, db } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import "../../App.css";
@@ -14,18 +14,13 @@ import {
 } from "firebase/firestore";
 import Nav from "../../components/Nav";
 import busTerminal from "../../assets/bus-terminal-2.jpg";
-import {
-  Button,
-  Drawer,
-  IconButton,
-  Option,
-  Select,
-} from "@material-tailwind/react";
+import { Button, Dialog, DialogBody, DialogFooter, Option, Select } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
-import { UseNavigationContext } from "../../context/UseNavigationContext";
-import { AuthContext } from "../authpage/Authprovider";
 import DrawerComponent from "../../components/DrawerComponent";
+import Reciept from "../Reciept";
+import { toPng } from "html-to-image";
+import LoadingComponent from "../../components/LoadingComponent";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -37,16 +32,19 @@ const Home = () => {
   const [amount, setAmount] = useState(0);
   const [phone, setPhone] = useState(0);
   const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+  const [receiptData, setReceiptData] = useState();
   const publicKey = "pk_test_25d20f79db1b76106fadc1ada3ed48e43a51d490";
   const [paystackAmount, setPaystackAmount] = useState(0);
-  const { isDrawerOpen, toggleDrawer } = UseNavigationContext();
-  const { logOut } = useContext(AuthContext);
+  const name = userName;
+  const elementRef = useRef(null);
+
 
   const componentProps = {
     email,
     amount,
     metadata: {
-      userName,
+      name,
       phone,
     },
     publicKey,
@@ -60,6 +58,22 @@ const Home = () => {
       toast.error("Transaction Canceled");
     },
   };
+  
+  const handleOpen = () => setOpen(!open);
+
+  const htmlToImageConvert = () => {
+    toPng(elementRef.current, { cacheBust: false })
+      .then((dataUrl) => {
+        const link = document.createElement("a");
+        link.download = "reciept.png";
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
 
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (user) => {
@@ -138,42 +152,46 @@ const Home = () => {
     getBusDetails();
   }, [destination]);
 
-  const payForBus = async (tranStatus, transRef ) => {
+  const payForBus = async (tranStatus, transRef) => {
     try {
       const busCollectionRef = collection(db, "ticketer_buses");
-        const userDocumentRef = doc(db, "ticketer_user", userId);
-        const receiptCollectionRef = collection(userDocumentRef, 'reciept');
-        const getCurrentDate = () => {
-          const currentDate = new Date();
-          const year = currentDate.getFullYear();
-          const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
-          const day = currentDate.getDate();
-          return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
-        };
+      const userDocumentRef = doc(db, "ticketer_user", userId);
+      const receiptCollectionRef = collection(userDocumentRef, "reciept");
+      const getCurrentDate = () => {
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1; // Months are zero-indexed, so add 1
+        const day = currentDate.getDate();
+        return `${year}-${month < 10 ? "0" + month : month}-${
+          day < 10 ? "0" + day : day
+        }`;
+      };
 
-        const getCurrentTime = () => {
-          const currentTime = new Date();
-          const hours = currentTime.getHours();
-          const minutes = currentTime.getMinutes();
-          const seconds = currentTime.getSeconds();
-          return `${hours}:${minutes}:${seconds}`;
-        };
+      const getCurrentTime = () => {
+        const currentTime = new Date();
+        const hours = currentTime.getHours();
+        const minutes = currentTime.getMinutes();
+        const seconds = currentTime.getSeconds();
+        return `${hours}:${minutes}:${seconds}`;
+      };
 
-        const currentTime = getCurrentTime();
-        const currentDate = getCurrentDate();
+      const currentTime = getCurrentTime();
+      const currentDate = getCurrentDate();
 
-         await addDoc(receiptCollectionRef, {
-          date: currentDate,
-          time:currentTime,
-          amount: paystackAmount,
-          status: tranStatus,
-          tranRef: transRef,
-          name: userName,
-          phone: phone,
-        })
+      await addDoc(receiptCollectionRef, {
+        timestamp: new Date(),
+        date: currentDate,
+        time: currentTime,
+        amount: paystackAmount,
+        status: tranStatus,
+        tranRef: transRef,
+        name: userName,
+        phone: phone,
+      });
       const querySnapshot = await getDocs(busCollectionRef);
       let busDocRef = null;
       let updatedSeatNumber = 0;
+     
 
       querySnapshot.forEach((doc) => {
         if (doc.data().name === destination) {
@@ -192,6 +210,20 @@ const Home = () => {
         await updateDoc(destinationDocRef, { seats: updatedSeatNumber });
         setSeatNumber(updatedSeatNumber);
       }
+
+      setReceiptData({
+        amount: paystackAmount,
+        date: currentDate,
+        time: currentTime,
+        status: tranStatus,
+        tranRef: transRef,
+        phone: phone,
+        sender: userName
+      });
+
+      setOpen(true)
+
+
     } catch (error) {
       console.log(error);
     }
@@ -201,10 +233,50 @@ const Home = () => {
   //   logOut();
   // };
 
+
   return (
     <div>
-     <DrawerComponent  userName={userName}/>
-      <Nav/>
+      <DrawerComponent userName={userName} />
+      <Nav />
+
+
+      <Dialog open={open} handler={handleOpen}>
+      <DialogBody ref={elementRef}>
+      {receiptData ? (
+      <Reciept
+        amount={paystackAmount}
+        date={receiptData.date}
+        time={receiptData.time}
+        status={receiptData.status}
+        phone={receiptData.phone}
+        sender={receiptData.sender}
+        trxref={receiptData.tranRef}
+      />
+    ) : (
+      <LoadingComponent/>
+    )}
+      </DialogBody>
+
+      <DialogFooter className="flex gap-x-5">
+        <Button
+          color="red"
+          onClick={() => {
+            handleOpen();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          color="green"
+          onClick={() => {
+            htmlToImageConvert();
+            handleOpen();
+          }}
+        >
+          Download
+        </Button>
+      </DialogFooter>
+    </Dialog>
 
       <div className="w-full h-screen bg-orange-3 flex justify-center">
         <div className="w-full h-[90%] bg-green-4 relative flex items-center flex-col">

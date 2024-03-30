@@ -30,7 +30,7 @@ const Nav = () => {
   return (
     <nav className="w-full h-16 bg-black flex sticky top-0 z-50">
       <div className="w-[20%] h-full bg-orange-2 flex items-center pl-10">
-        <h1 className="text-3xl text-white cursor-pointer" onClick={() => navigate('/')}>Ticketer</h1>
+        <h1 className="text-3xl text-white cursor-pointer" onClick={() => navigate('/')}>Ticketa</h1>
       </div>
       <div className="w-[80%] h-full bg-orange-4">
         <ul className=" w-full h-full flex justify-end items-center lg:pr-10 lg:gap-x-10">
