@@ -62,7 +62,7 @@ const Register = () => {
             <Input
               label="Email"
               size="lg"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.trim())}
             />
             <Input
               label="Password"

@@ -1,14 +1,15 @@
-import { Navigate, Outlet } from "react-router-dom";
+import {  Outlet, useNavigate } from "react-router-dom";
 import useAuth from "./useAuth";
 import spinner from "../../assets/spinner.svg";
 import { useEffect, useState } from "react";
 
 import {db } from "../../config/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import Admin from "../Admin";
+import { Button, Typography } from "@material-tailwind/react";
 
-const PrivateRoute = () => {
+const PrivateAdminRoute = () => {
   const user = useAuth();
+  const navigate = useNavigate();
   const [userRole, setUserRole] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -29,7 +30,7 @@ const PrivateRoute = () => {
     }
   };
   // console.log("user Authenticated", user);
-  return typeof user === "undefined" ? (
+  return typeof user === "undefined"  ? (
     <div className="w-full h-screen flex flex-col justify-center items-center">
       <img
         src={spinner}
@@ -40,11 +41,16 @@ const PrivateRoute = () => {
         Oga Please Wait Na Network.{" "}
       </p>
     </div>
-  ) : user ? (
-    userRole === "admin" ? <Admin /> : <Outlet />
+  ) : user && userRole === 'admin' ? (
+     <Outlet />
   ) : (
-    <Navigate to="/login" />
+    <div className=" w-full h-[80vh] flex flex-col gap-y-4 justify-center items-center">
+      <h1 className="text-2xl">You Are Not Authorized</h1>
+      <Button>
+        <Typography onClick={() => {navigate('/')}}>Go Home</Typography>
+      </Button>
+    </div>
   );
 };
 
-export default PrivateRoute;
+export default PrivateAdminRoute;

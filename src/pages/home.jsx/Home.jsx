@@ -89,6 +89,7 @@ const Home = () => {
     const checkIfUserDetailsArePresent = async (uid) => {
       try {
         const documentRef = doc(db, "ticketer_user", uid);
+        
         const documentSnapshot = await getDoc(documentRef);
         if (documentSnapshot.exists()) {
           const data = documentSnapshot.data();
@@ -116,6 +117,7 @@ const Home = () => {
         const querySnapshot = await getDocs(busCollectionRef);
 
         const busesData = querySnapshot.docs.map((doc) => ({
+          id:doc.id,
           ...doc.data(),
         }));
         setListOfBuses(busesData);
@@ -187,6 +189,8 @@ const Home = () => {
         tranRef: transRef,
         name: userName,
         phone: phone,
+        destination: destination,
+        checkedIn: false
       });
       const querySnapshot = await getDocs(busCollectionRef);
       let busDocRef = null;
@@ -200,6 +204,20 @@ const Home = () => {
       });
 
       const destinationDocRef = doc(db, "ticketer_buses", busDocRef);
+      const destinationRecieptCollection = collection(destinationDocRef, "reciepts");
+
+      await addDoc(destinationRecieptCollection, {
+        timestamp: new Date(),
+        date: currentDate,
+        time: currentTime,
+        amount: paystackAmount,
+        status: tranStatus,
+        tranRef: transRef,
+        name: userName,
+        phone: phone,
+        destination: destination,
+        checkedIn: false
+      })
       const documentSnapshot = await getDoc(destinationDocRef);
 
       if (documentSnapshot.exists()) {
@@ -211,6 +229,7 @@ const Home = () => {
         setSeatNumber(updatedSeatNumber);
       }
 
+
       setReceiptData({
         amount: paystackAmount,
         date: currentDate,
@@ -218,7 +237,8 @@ const Home = () => {
         status: tranStatus,
         tranRef: transRef,
         phone: phone,
-        sender: userName
+        sender: userName,
+        destination: destination,
       });
 
       setOpen(true)
@@ -251,6 +271,7 @@ const Home = () => {
         phone={receiptData.phone}
         sender={receiptData.sender}
         trxref={receiptData.tranRef}
+        destination={receiptData.destination}
       />
     ) : (
       <LoadingComponent/>
@@ -281,14 +302,20 @@ const Home = () => {
       <div className="w-full h-screen bg-orange-3 flex justify-center">
         <div className="w-full h-[90%] bg-green-4 relative flex items-center flex-col">
           <div
-            className="w-full h-1/2 bg-blue-gray-2"
+            className="w-full h-1/2 bg-blue-gray-2 flex justify-center"
             style={{
               backgroundImage: `url(${busTerminal})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
-          ></div>
+          >
+            <div className="w-full h-full bg-[#00000054] flex justify-center pt-11">
+            <p className="text-white text-4xl font-bold"> Hello, {userName}</p>
+            </div>
+            
+             
+          </div>
           <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[65%] bg-black absolute lg:bottom-36 bottom-28 lg:flex-row flex-col  flex p-11 rounded-lg">
             <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white  ">
               <Select
@@ -296,13 +323,14 @@ const Home = () => {
                 className=" bg-white border-white focus:border-white "
               >
                 {listOfBuses.map((bus) => (
+                 (bus.deactivated == false)?
                   <Option
                     key={bus.name}
                     value={bus.name}
                     onClick={() => setDestination(bus.name)}
                   >
                     {bus.name}
-                  </Option>
+                  </Option>: ''
                 ))}
               </Select>
               <div className="w-full px-2 text-white">

@@ -52,7 +52,7 @@ if (loading) {
           </Typography>
         </CardHeader>
         <CardBody className="flex flex-col gap-4">
-          <Input label="Email" size="lg" onChange={(e) => setEmail(e.target.value)}/>
+          <Input label="Email" size="lg" onChange={(e) => setEmail(e.target.value.trim())}/>
           <Input label="Password" size="lg" onChange={(e) => setPassword(e.target.value)}/>
           {/* <div className="-ml-2.5">
             <Checkbox label="Remember Me" />

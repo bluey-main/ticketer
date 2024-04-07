@@ -152,6 +152,7 @@ const Transactions = () => {
               sender={userId}
               status={selectedTransaction?.status}
               trxref={selectedTransaction?.tranRef}
+              destination={selectedTransaction?.destination}
             />
           </DialogBody>
 

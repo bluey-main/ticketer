@@ -10,8 +10,9 @@ import AuthProvider from "./pages/authpage/Authprovider";
 import Userdetails from "./components/Userdetails";
 import Admin from "./pages/Admin";
 import { NavigationProvider } from "./context/NavigationContext";
-import Reciept from "./pages/Reciept";
 import Transactions from "./pages/Transactions";
+import Busdetails from "./pages/Busdetails";
+import PrivateAdminRoute from "./pages/authpage/PrivateAdminRoute";
 
 function App() {
   return (
@@ -35,7 +36,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userdetails" element={<Userdetails />} />
-              <Route path="/admin" element={<Admin />} />
+              <Route path="/buses/:busId" element={<Busdetails />} />
+              <Route element={<PrivateAdminRoute />}>
+                <Route path="/admin" element={<Admin />} />
+              </Route>
               {/* <Route path="/rec" element={<Reciept />} /> */}
               <Route path="/transactions" element={<Transactions />} />
               <Route element={<PrivateRoute />}>
