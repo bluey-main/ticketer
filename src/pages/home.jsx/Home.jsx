@@ -361,7 +361,7 @@ console.log("subscribe from home")
                   <p className="lg:text-xl text-lg text-center font-bold">Price</p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
-                <div className="lg:w-1/2 w-full lg:h-full px-4 bg-orange-400 flex flex-col justify-center items-center text-white lg:border-l lg:border-l-white">
+                <div className="lg:w-1/2 w-full lg:h-full px-4 bg-green-200 flex flex-col justify-center items-center text-black rounded-lg lg:border-l lg:border-l-white">
                   <p className="lg:text-xl text-lg text-center font-bold">
                     Departure Time
                   </p>
