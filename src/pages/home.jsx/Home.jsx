@@ -29,6 +29,7 @@ const Home = () => {
   const [userName, setUserName] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
   const [listOfBuses, setListOfBuses] = useState([]);
+  const [depatureTime, setDepatureTime] = useState("")
   const [amount, setAmount] = useState(0);
   const [phone, setPhone] = useState(0);
   const [email, setEmail] = useState("");
@@ -85,7 +86,7 @@ const Home = () => {
         navigate("/login");
       }
     });
-
+console.log("subscribe from home")
     const checkIfUserDetailsArePresent = async (uid) => {
       try {
         const documentRef = doc(db, "ticketer_user", uid);
@@ -132,6 +133,8 @@ const Home = () => {
   }, [navigate]);
 
   useEffect(() => {
+console.log("subscribe from home")
+
     const getBusDetails = async () => {
       try {
         if (destination) {
@@ -190,6 +193,7 @@ const Home = () => {
         name: userName,
         phone: phone,
         destination: destination,
+        depatureTime:depatureTime,
         checkedIn: false
       });
       const querySnapshot = await getDocs(busCollectionRef);
@@ -216,6 +220,7 @@ const Home = () => {
         name: userName,
         phone: phone,
         destination: destination,
+        departure: depatureTime,
         checkedIn: false
       })
       const documentSnapshot = await getDoc(destinationDocRef);
@@ -239,6 +244,7 @@ const Home = () => {
         phone: phone,
         sender: userName,
         destination: destination,
+        departure: depatureTime,
       });
 
       setOpen(true)
@@ -272,6 +278,7 @@ const Home = () => {
         sender={receiptData.sender}
         trxref={receiptData.tranRef}
         destination={receiptData.destination}
+        departure={receiptData.departure}
       />
     ) : (
       <LoadingComponent/>
@@ -311,7 +318,7 @@ const Home = () => {
             }}
           >
             <div className="w-full h-full bg-[#00000054] flex justify-center pt-11">
-            <p className="text-white text-4xl font-bold"> Hello, {userName}</p>
+            <p className="text-white lg:text-4xl text-2xl font-bold"> Hello, {userName}</p>
             </div>
             
              
@@ -327,31 +334,42 @@ const Home = () => {
                   <Option
                     key={bus.name}
                     value={bus.name}
-                    onClick={() => setDestination(bus.name)}
+                    onClick={() => {
+                      setDestination(bus.name);
+                      setDepatureTime(bus.departure)
+                      console.log(bus.departure)
+                    }}
                   >
                     {bus.name}
                   </Option>: ''
                 ))}
               </Select>
               <div className="w-full px-2 text-white">
-                <p className="text-2xl font-bold">Destination</p>
+                <p className="text-xl font-bold">Destination</p>
                 <p className="text-xl ">{destination}</p>
               </div>
             </div>
-            <div className="lg:w-[60%] w-full h-full bg-teal-3">
-              <div className="w-full h-1/2 bg-yellow-2 flex justify-center items-center">
-                <div className="w-1/2 h-full bg-orange-4 flex flex-col justify-center items-center text-white border-r border-r-white">
-                  <p className="lg:text-2xl text-xl text-center font-bold">
+            <div className="lg:w-[60%] w-full h-full bg-teal-3 ">
+              <div className="w-full h-[70%] bg-yellow- flex lg:flex-nowrap flex-wrap  justify-center items-center">
+                <div className="w-1/2 lg:h-full px-4  bg-orange-4 flex flex-col justify-center items-center text-white border-r border-r-white">
+                  <p className="lg:text-xl text-lg text-center font-bold">
                     Seats Available
                   </p>
                   <p className="text-xl ">{seatNumber}</p>
                 </div>
-                <div className="w-1/2 h-full bg-orange-2 flex flex-col justify-center items-center text-white">
-                  <p className="lg:text-2xl text-xl text-center font-bold">Price</p>
+                <div className="w-1/2 lg:h-full bg-orange-2 flex flex-col justify-center items-center text-white">
+                  <p className="lg:text-xl text-lg text-center font-bold">Price</p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
+                <div className="w-1/2 lg:h-full px-4 bg-orange-4 flex flex-col justify-center items-center text-white lg:border-l lg:border-l-white">
+                  <p className="lg:text-xl text-lg text-center font-bold">
+                    Departure Time
+                  </p>
+                  <p className="text-xl ">{depatureTime}</p>
+                </div>
+                
               </div>
-              <div className="w-full h-1/2 lg:px-28 bg-yellow-4 flex justify-center items-center">
+              <div className="w-full h-[30%] lg:px-28 bg-yellow-4 flex justify-center items-center">
                 {/* <Button
                   variant="gradient"
                   fullWidth

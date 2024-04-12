@@ -42,6 +42,8 @@ const Transactions = () => {
       }
     });
 
+    console.log("subscribe from transaction")
+
     return () => unsubcribe;
   }, []);
 
@@ -71,6 +73,7 @@ const Transactions = () => {
 
   const handleTransactionClick = (transaction) => {
     setSelectedTransaction(transaction);
+ 
     handleOpen();
   };
 
@@ -153,6 +156,7 @@ const Transactions = () => {
               status={selectedTransaction?.status}
               trxref={selectedTransaction?.tranRef}
               destination={selectedTransaction?.destination}
+              departure={selectedTransaction?.depatureTime}
             />
           </DialogBody>
 

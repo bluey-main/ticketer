@@ -5,11 +5,12 @@ import { auth } from "../../config/firebase";
 
 const useAuth = () => {
     const [currentUser, setCurrentUser] = useState();
+    
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
         });
-        
+         console.log("subscribe from useAuth")
         return unSubscribe;
     }, [])
 

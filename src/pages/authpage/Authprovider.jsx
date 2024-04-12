@@ -29,7 +29,7 @@ const AuthProvider = ({children}) => {
         try {
             setLoading(true)
            const currentUser = await createUserWithEmailAndPassword(auth, email,password);
-           console.log(currentUser.user.u);
+           console.log(currentUser.user.uid);
            addUserToDatabase(currentUser.user.email, currentUser.user.uid);
             toast.success('Sign Up Successful');
 
@@ -70,7 +70,10 @@ const AuthProvider = ({children}) => {
             setLoading(false);
         });
 
+        console.log("sunscribe from Authprovider")
+
         return () => unsubscribe();
+
     }, []);
 
     const authValue = {

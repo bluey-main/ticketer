@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Reciept = ({amount, status, date,time, sender, phone, trxref, destination} ) => {
+const Reciept = ({amount, status, date,time, sender, phone, trxref, destination, departure} ) => {
   return (
 
       <div className="w-full  h-[30rem] bg-white">
@@ -30,6 +30,10 @@ const Reciept = ({amount, status, date,time, sender, phone, trxref, destination}
             <p className='text-left lg:text-lg text-sm'>Destination</p>
             <p className="font-bold text-right lg:text-lg  text-sm">{destination}</p>
           </div>
+          <div className="w-full bg-pink-4 flex justify-between items-center text-xl px-10">
+            <p className='text-left lg:text-lg text-sm'>Depature Time</p>
+            <p className="font-bold text-right lg:text-lg  text-sm">{departure}</p>
+          </div>
           <div className="w-full bg-pink-5 flex justify-between items-center text-xl px-10">
             <p className='text-left lg:text-lg text-sm'>Phone Number</p>
             <p className="font-bold text-right lg:text-lg  text-sm">{phone}</p>
@@ -53,7 +57,7 @@ Reciept.propTypes = {
   phone:PropTypes.string, 
   trxref:PropTypes.string,
   destination:PropTypes.string,
-
+  departure:PropTypes.string,
 }
 
 

@@ -43,7 +43,7 @@ const Busdetails = () => {
       }`;
     };
 
-    console.log("subscribe");
+    console.log("subscribe from bus details");
 
 
     setTodayDate(getCurrentDate());

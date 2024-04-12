@@ -1,3 +1,34 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* For WebKit browsers */
+/* Customize scrollbar */
+::-webkit-scrollbar {
+    width: 6px; /* Set the width of the scrollbar */
+    border-radius: 10px; /* Add border radius to the scrollbar */
+  }
+
+
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888; /* Set the color of the scrollbar handle */
+    border-radius: 10px; /* Add border radius to the scrollbar handle */
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Set the color of the scrollbar handle on hover */
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1; /* Set the color of the scrollbar track */
+  }
+  
+  /* Corner */
+  ::-webkit-scrollbar-corner {
+    background: transparent; /* Set the color of the scrollbar corner */
+  }
+  

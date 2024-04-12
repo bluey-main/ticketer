@@ -12,23 +12,29 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { AuthContext } from "./Authprovider";
-import spinner from '../../assets/spinner.svg'
-
-
+import spinner from "../../assets/spinner.svg";
+import { PiEyeSlashLight } from "react-icons/pi";
 
 const Register = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+
   const { user, createUser, loading } = useContext(AuthContext);
 
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
-        <img src={spinner} alt="loading" className="animate-spin flex item-center mx-auto"/>
-  
-    </div>
+        <img
+          src={spinner}
+          alt="loading"
+          className="animate-spin flex item-center mx-auto"
+        />
+      </div>
     );
   }
 
@@ -36,13 +42,12 @@ const Register = () => {
     navigate("/");
   }
 
-
   const handleSubmit = async () => {
     if (password !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    createUser(email, password)
+    createUser(email, password);
   };
 
   if (!user) {
@@ -64,16 +69,44 @@ const Register = () => {
               size="lg"
               onChange={(e) => setEmail(e.target.value.trim())}
             />
-            <Input
-              label="Password"
-              size="lg"
-              onChange={(e) => setPassword(e.target.value)}
-            />
+
+            <div className="relative flex  w-full max-w-[24rem]">
+              <Input
+                label="Password"
+                size="lg"
+              type={showPassword ? "text" : "password"}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                size="sm"
+                color={password ? "gray" : "blue-gray"}
+                disabled={!password}
+                className="!absolute right-1 top-2 rounded text-center cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                <PiEyeSlashLight />
+              </Button>
+            </div>
+
+            <div className="relative flex  w-full max-w-[24rem]">
             <Input
               label=" Confirm Password"
               size="lg"
+              type={showConfirmPassword ? "text" : "password"}
+
               onChange={(e) => setConfirmPassword(e.target.value)}
             />
+              <Button
+                size="sm"
+                color={confirmPassword ? "gray" : "blue-gray"}
+                disabled={!confirmPassword}
+                className="!absolute right-1 top-2 rounded text-center cursor-pointer"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                <PiEyeSlashLight />
+              </Button>
+            </div>
+            
 
             {/* <div className="-ml-2.5">
           <Checkbox label="Remember Me" />

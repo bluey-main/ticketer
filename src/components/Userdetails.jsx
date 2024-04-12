@@ -11,11 +11,10 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, db } from "../config/firebase";
-import {  doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { toast } from "react-toastify";
-import spinner from '../assets/spinner.svg'
-
+import spinner from "../assets/spinner.svg";
 
 const Userdetails = () => {
   const navigate = useNavigate();
@@ -40,7 +39,7 @@ const Userdetails = () => {
 
     const checkIfUserDetailsArePresent = async (uid) => {
       try {
-        setLoading(true)
+        setLoading(true);
         const documentRef = await doc(db, "ticketer_user", uid);
         const documentSnapshot = await getDoc(documentRef);
         if (documentSnapshot.exists()) {
@@ -56,7 +55,9 @@ const Userdetails = () => {
             navigate("/");
           }
         }
-        setLoading(false)
+  console.log("subcribe from user details");
+
+        setLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -65,6 +66,7 @@ const Userdetails = () => {
     return () => unsubcribe;
   }, [navigate]);
 
+  
   const updateUserDetails = async () => {
     try {
       const documentRef = doc(db, "ticketer_user", user.uid);
@@ -74,27 +76,42 @@ const Userdetails = () => {
         phone: phone,
         address: address,
       };
-      if (firstName == '' || lastName == '' || phone == '' || address == '') {
-        toast.error("Fill All Fields");
+      const containsNumber = /\d/.test(firstName) || /\d/.test(lastName);
+      if (
+        firstName === "" ||
+        containsNumber ||
+        firstName.length < 3 ||
+        lastName === "" ||
+        containsNumber ||
+        lastName.length < 3 ||
+        phone === "" ||
+        phone.length !== 11 ||
+        address === "" ||
+        address.length < 3
+      ) {
+        toast.error("Fill All Fields Correctly");
         return;
       }
-
-      await updateDoc(documentRef, additionalData).then(() => {
-        toast.success("User details updated");
-        navigate("/");
-      });
+  
+      await updateDoc(documentRef, additionalData);
+      toast.success("User details updated");
+      navigate("/");
     } catch (error) {
-      console.log(error);
+      console.error(error);
       toast.error(error.message);
     }
   };
-
+  
+  
   if (loading) {
     return (
       <div className="w-full h-screen flex justify-center items-center">
-        <img src={spinner} alt="loading" className="animate-spin flex item-center mx-auto"/>
-  
-    </div>
+        <img
+          src={spinner}
+          alt="loading"
+          className="animate-spin flex item-center mx-auto"
+        />
+      </div>
     );
   }
 
@@ -126,11 +143,11 @@ const Userdetails = () => {
             type="number"
             size="lg"
             value={phone}
-            onChange={(e) =>{
-                const phoneInput = e.target.value.toString();
-                if (phoneInput.length <= 11) {
-                  setPhone(phoneInput);
-                }
+            onChange={(e) => {
+              const phoneInput = e.target.value.toString();
+              if (phoneInput.length <= 11) {
+                setPhone(phoneInput);
+              }
             }}
           />
           <Input

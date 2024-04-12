@@ -14,6 +14,7 @@ const PrivateAdminRoute = () => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     getUserRole();
+    console.log("subscribe from private admin route");
   });
 
   const getUserRole = async () => {
