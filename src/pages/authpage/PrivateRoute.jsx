@@ -48,9 +48,9 @@ const PrivateRoute = () => {
         alt="loading"
         className="animate-spin flex item-center mx-auto"
       />
-      <p className="text-center text-xl text-black mt-7">
+      {/* <p className="text-center text-xl text-black mt-7">
         Oga Please Wait Na Network.{" "}
-      </p>
+      </p> */}
     </div>
   ) : user ? (
     userRole === "admin" ? <Admin /> : <Outlet />
