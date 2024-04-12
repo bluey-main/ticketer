@@ -323,7 +323,7 @@ console.log("subscribe from home")
             
              
           </div>
-          <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[75%] bg-black absolute lg:bottom-36 bottom-28 lg:flex-row flex-col  flex p-5 rounded-lg">
+          <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[75%] bg-black absolute lg:bottom-36 bottom-10 lg:flex-row flex-col  flex p-5 rounded-lg">
             <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white  ">
               <Select
                 label="Destination"
@@ -361,7 +361,7 @@ console.log("subscribe from home")
                   <p className="lg:text-xl text-lg text-center font-bold">Price</p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
-                <div className="w-1/2 lg:h-full px-4 bg-orange-4 flex flex-col justify-center items-center text-white lg:border-l lg:border-l-white">
+                <div className="lg:w-1/2 w-full lg:h-full px-4 bg-orange-400 flex flex-col justify-center items-center text-white lg:border-l lg:border-l-white">
                   <p className="lg:text-xl text-lg text-center font-bold">
                     Departure Time
                   </p>
