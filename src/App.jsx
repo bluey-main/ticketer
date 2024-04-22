@@ -13,6 +13,7 @@ import { NavigationProvider } from "./context/NavigationContext";
 import Transactions from "./pages/Transactions";
 import Busdetails from "./pages/Busdetails";
 import PrivateAdminRoute from "./pages/authpage/PrivateAdminRoute";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             />
             <Routes>
               <Route path="/login" element={<Login />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userdetails" element={<Userdetails />} />
               <Route path="/buses/:busId" element={<Busdetails />} />
