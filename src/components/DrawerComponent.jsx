@@ -74,7 +74,7 @@ const DrawerComponent = ({userName}) => {
             color="green"
             className="h-16"
             size="lg"
-            onClick={() => navigate('/contact')}
+            onClick={() => navigate('/destination')}
           >
             Destination
           </Button>
