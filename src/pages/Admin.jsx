@@ -318,8 +318,8 @@ const BusSettings = () => {
             <tr className="[&>*]:text-base [&>*]:text-black">
               <th className="w-1/2">Bus Name</th>
               <th className="w-1/2">Price</th>
-              <th className="w-1/2">Seats</th>
               <th className="w-1/2">Depature</th>
+              <th className="w-1/2">Seats</th>
               <th className="w-1/2">Action</th>
             </tr>
           </thead>
