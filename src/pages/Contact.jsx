@@ -4,6 +4,8 @@ import { FaPhoneAlt, FaTelegramPlane } from "react-icons/fa";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { toast } from "react-toastify";
+import Nav from "../components/Nav";
+import DrawerComponent from "../components/DrawerComponent";
 
 const Contact = () => {
   const [info, setInfo] = useState({
@@ -73,6 +75,9 @@ const Contact = () => {
   };
 
   return (
+    <>
+       <DrawerComponent userName={""} />
+      <Nav />
     <div className="w-full lg:h-screen  flex lg:flex-row flex-col lg:gap-y-0 gap-y-7 justify-center items-center p-6">
       <div className="lg:w-[40%] w-full lg:h-[80%] h-[34rem] bg-blue-4 px-6 overflow-hidden shadow-2xl">
         <div className="w-full h-[20%] bg-red-3 flex items-center">
@@ -164,6 +169,8 @@ const Contact = () => {
         </div>
       </div>
     </div>
+    </>
+
   );
 };
 
