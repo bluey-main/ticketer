@@ -14,7 +14,14 @@ import {
 } from "firebase/firestore";
 import Nav from "../../components/Nav";
 import busTerminal from "../../assets/bus-terminal-2.jpg";
-import { Button, Dialog, DialogBody, DialogFooter, Option, Select } from "@material-tailwind/react";
+import {
+  Button,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  Option,
+  Select,
+} from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import { PaystackButton } from "react-paystack";
 import DrawerComponent from "../../components/DrawerComponent";
@@ -29,7 +36,7 @@ const Home = () => {
   const [userName, setUserName] = useState("");
   const [seatNumber, setSeatNumber] = useState(0);
   const [listOfBuses, setListOfBuses] = useState([]);
-  const [depatureTime, setDepatureTime] = useState("")
+  const [depatureTime, setDepatureTime] = useState("");
   const [amount, setAmount] = useState(0);
   const [phone, setPhone] = useState(0);
   const [email, setEmail] = useState("");
@@ -39,7 +46,6 @@ const Home = () => {
   const [paystackAmount, setPaystackAmount] = useState(0);
   const name = userName;
   const elementRef = useRef(null);
-
 
   const componentProps = {
     email,
@@ -59,7 +65,7 @@ const Home = () => {
       toast.error("Transaction Canceled");
     },
   };
-  
+
   const handleOpen = () => setOpen(!open);
 
   const htmlToImageConvert = () => {
@@ -75,7 +81,6 @@ const Home = () => {
       });
   };
 
-
   useEffect(() => {
     const unsubcribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -86,11 +91,11 @@ const Home = () => {
         navigate("/login");
       }
     });
-console.log("subscribe from home")
+    console.log("subscribe from home");
     const checkIfUserDetailsArePresent = async (uid) => {
       try {
         const documentRef = doc(db, "ticketer_user", uid);
-        
+
         const documentSnapshot = await getDoc(documentRef);
         if (documentSnapshot.exists()) {
           const data = documentSnapshot.data();
@@ -118,7 +123,7 @@ console.log("subscribe from home")
         const querySnapshot = await getDocs(busCollectionRef);
 
         const busesData = querySnapshot.docs.map((doc) => ({
-          id:doc.id,
+          id: doc.id,
           ...doc.data(),
         }));
         setListOfBuses(busesData);
@@ -133,7 +138,7 @@ console.log("subscribe from home")
   }, [navigate]);
 
   useEffect(() => {
-console.log("subscribe from home")
+    console.log("subscribe from home");
 
     const getBusDetails = async () => {
       try {
@@ -193,13 +198,12 @@ console.log("subscribe from home")
         name: userName,
         phone: phone,
         destination: destination,
-        depatureTime:depatureTime,
-        checkedIn: false
+        depatureTime: depatureTime,
+        checkedIn: false,
       });
       const querySnapshot = await getDocs(busCollectionRef);
       let busDocRef = null;
       let updatedSeatNumber = 0;
-     
 
       querySnapshot.forEach((doc) => {
         if (doc.data().name === destination) {
@@ -208,7 +212,10 @@ console.log("subscribe from home")
       });
 
       const destinationDocRef = doc(db, "ticketer_buses", busDocRef);
-      const destinationRecieptCollection = collection(destinationDocRef, "reciepts");
+      const destinationRecieptCollection = collection(
+        destinationDocRef,
+        "reciepts"
+      );
 
       await addDoc(destinationRecieptCollection, {
         timestamp: new Date(),
@@ -221,8 +228,8 @@ console.log("subscribe from home")
         phone: phone,
         destination: destination,
         departure: depatureTime,
-        checkedIn: false
-      })
+        checkedIn: false,
+      });
       const documentSnapshot = await getDoc(destinationDocRef);
 
       if (documentSnapshot.exists()) {
@@ -233,7 +240,6 @@ console.log("subscribe from home")
         await updateDoc(destinationDocRef, { seats: updatedSeatNumber });
         setSeatNumber(updatedSeatNumber);
       }
-
 
       setReceiptData({
         amount: paystackAmount,
@@ -247,9 +253,7 @@ console.log("subscribe from home")
         departure: depatureTime,
       });
 
-      setOpen(true)
-
-
+      setOpen(true);
     } catch (error) {
       console.log(error);
     }
@@ -259,52 +263,50 @@ console.log("subscribe from home")
   //   logOut();
   // };
 
-
   return (
     <div>
       <DrawerComponent userName={userName} />
       <Nav />
 
-
       <Dialog open={open} handler={handleOpen}>
-      <DialogBody ref={elementRef}>
-      {receiptData ? (
-      <Reciept
-        amount={paystackAmount}
-        date={receiptData.date}
-        time={receiptData.time}
-        status={receiptData.status}
-        phone={receiptData.phone}
-        sender={receiptData.sender}
-        trxref={receiptData.tranRef}
-        destination={receiptData.destination}
-        departure={receiptData.departure}
-      />
-    ) : (
-      <LoadingComponent/>
-    )}
-      </DialogBody>
+        <DialogBody ref={elementRef}>
+          {receiptData ? (
+            <Reciept
+              amount={paystackAmount}
+              date={receiptData.date}
+              time={receiptData.time}
+              status={receiptData.status}
+              phone={receiptData.phone}
+              sender={receiptData.sender}
+              trxref={receiptData.tranRef}
+              destination={receiptData.destination}
+              departure={receiptData.departure}
+            />
+          ) : (
+            <LoadingComponent />
+          )}
+        </DialogBody>
 
-      <DialogFooter className="flex gap-x-5">
-        <Button
-          color="red"
-          onClick={() => {
-            handleOpen();
-          }}
-        >
-          Cancel
-        </Button>
-        <Button
-          color="green"
-          onClick={() => {
-            htmlToImageConvert();
-            handleOpen();
-          }}
-        >
-          Download
-        </Button>
-      </DialogFooter>
-    </Dialog>
+        <DialogFooter className="flex gap-x-5">
+          <Button
+            color="red"
+            onClick={() => {
+              handleOpen();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            color="green"
+            onClick={() => {
+              htmlToImageConvert();
+              handleOpen();
+            }}
+          >
+            Download
+          </Button>
+        </DialogFooter>
+      </Dialog>
 
       <div className="w-full h-screen bg-orange-3 flex justify-center">
         <div className="w-full h-[90%] bg-green-4 relative flex items-center flex-col">
@@ -318,10 +320,11 @@ console.log("subscribe from home")
             }}
           >
             <div className="w-full h-full bg-[#00000054] flex justify-center pt-11">
-            <p className="text-white lg:text-4xl text-2xl font-bold"> Hello, {userName}</p>
+              <p className="text-white lg:text-4xl text-2xl font-bold">
+                {" "}
+                Hello, {userName}
+              </p>
             </div>
-            
-             
           </div>
           <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[75%] bg-black absolute lg:bottom-36 bottom-10 lg:flex-row flex-col  flex p-5 rounded-lg">
             <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white  ">
@@ -329,20 +332,23 @@ console.log("subscribe from home")
                 label="Destination"
                 className=" bg-white border-white focus:border-white "
               >
-                {listOfBuses.map((bus) => (
-                 (bus.deactivated == false)?
-                  <Option
-                    key={bus.name}
-                    value={bus.name}
-                    onClick={() => {
-                      setDestination(bus.name);
-                      setDepatureTime(bus.departure)
-                      console.log(bus.departure)
-                    }}
-                  >
-                    {bus.name}
-                  </Option>: ''
-                ))}
+                {listOfBuses.map((bus) =>
+                  bus.deactivated == false ? (
+                    <Option
+                      key={bus.name}
+                      value={bus.name}
+                      onClick={() => {
+                        setDestination(bus.name);
+                        setDepatureTime(bus.departure);
+                        console.log(bus.departure);
+                      }}
+                    >
+                      {bus.name}
+                    </Option>
+                  ) : (
+                    ""
+                  )
+                )}
               </Select>
               <div className="w-full px-2 text-white">
                 <p className="text-xl font-bold">Destination</p>
@@ -358,7 +364,9 @@ console.log("subscribe from home")
                   <p className="text-xl ">{seatNumber}</p>
                 </div>
                 <div className="w-1/2 lg:h-full bg-orange-2 flex flex-col justify-center items-center text-white">
-                  <p className="lg:text-xl text-lg text-center font-bold">Price</p>
+                  <p className="lg:text-xl text-lg text-center font-bold">
+                    Price
+                  </p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
                 <div className="lg:w-1/2 w-full lg:h-full px-4 bg-green-200 flex flex-col justify-center items-center text-black rounded-lg lg:border-l lg:border-l-white">
@@ -367,7 +375,6 @@ console.log("subscribe from home")
                   </p>
                   <p className="text-xl ">{depatureTime}</p>
                 </div>
-                
               </div>
               <div className="w-full h-[30%] lg:px-28 bg-yellow-4 flex justify-center items-center">
                 {/* <Button

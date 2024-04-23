@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
   const { logOut, loading } = useContext(AuthContext);
-  const { toggleDrawer} = UseNavigationContext()
+  const { toggleDrawer } = UseNavigationContext();
   const navigate = useNavigate();
 
   if (loading) {
@@ -30,11 +30,24 @@ const Nav = () => {
   return (
     <nav className="w-full h-16 bg-black flex sticky top-0 z-50">
       <div className="w-[20%] h-full bg-orange-2 flex items-center pl-10">
-        <h1 className="text-3xl text-white cursor-pointer" onClick={() => navigate('/')}>Ticketa</h1>
+        <h1
+          className="text-3xl text-white cursor-pointer"
+          onClick={() => navigate("/")}
+        >
+          Ticketa
+        </h1>
       </div>
       <div className="w-[80%] h-full bg-orange-4">
-        <ul className=" w-full h-full flex justify-end items-center lg:pr-10 lg:gap-x-10">
-        
+        <ul className=" w-full h-full flex justify-end items-center text-white lg:pr-10 lg:gap-x-10 [&>li]:cursor-pointer lg:[&>li]:block [&>li]:hidden">
+          
+        <li onClick={()=>navigate('/transactions')}>
+            <p>Transaction History</p>
+          </li>
+
+          <li onClick={()=>navigate('/contact')}>
+            <p>Contact Us</p>
+          </li>
+
           <li>
             <Button
               variant="gradient"
@@ -48,7 +61,8 @@ const Nav = () => {
             </Button>
           </li>
 
-          <li>
+
+          {/* <li>
             <Button
               variant="gradient"
               fullWidth
@@ -59,7 +73,7 @@ const Nav = () => {
             >
               Transaction History
             </Button>
-          </li>
+          </li> */}
 
           <img
             src={hamburgerMenu}
@@ -76,6 +90,5 @@ const Nav = () => {
     </nav>
   );
 };
-
 
 export default Nav;
