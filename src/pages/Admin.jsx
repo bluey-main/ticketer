@@ -382,7 +382,7 @@ const BusSettings = () => {
               <Input
                 label="Bus ID"
                 size="lg"
-                onChange={(e) => setNewBusId(e.target.value)}
+                onChange={(e) => setNewBusId(e.target.value.trim())}
               />
             </div>
 
@@ -399,7 +399,7 @@ const BusSettings = () => {
               <Input
                 label="Bus Name"
                 size="lg"
-                onChange={(e) => setNewBusName(e.target.value)}
+                onChange={(e) => setNewBusName(e.target.value.trim())}
               />
             </div>
 
@@ -454,7 +454,7 @@ const BusSettings = () => {
                 )}
               </Typography>
               <Select label="Destination">
-                <Option value={"2PM"} onClick={() => setNewDeparture("2PM")}>
+                <Option value={"2PM"} onClick={() => setNewDeparture("2pm")}>
                   2PM
                 </Option>
                 <Option value={"4PM"} onClick={() => setNewDeparture("4pm")}>
@@ -518,7 +518,7 @@ const BusSettings = () => {
               label="Bus Name"
               size="lg"
               value={editBusName}
-              onChange={(e) => setEditBusName(e.target.value)}
+              onChange={(e) => setEditBusName(e.target.value.trim())}
             />
             </div>
            
@@ -539,7 +539,7 @@ const BusSettings = () => {
               size="lg"
               type="number"
               value={editBusPrice}
-              onChange={(e) => setEditBusPrice(e.target.value)}
+              onChange={(e) => setEditBusPrice(e.target.value.trim())}
             />
            </div>
            
@@ -573,7 +573,7 @@ const BusSettings = () => {
               )}
             </Typography>
             <Select label={editdeparture}>
-              <Option value={"2PM"} onClick={() => setEditDeparture("2PM")}>
+              <Option value={"2PM"} onClick={() => setEditDeparture("2pm")}>
                 2PM
               </Option>
               <Option value={"4PM"} onClick={() => setEditDeparture("4pm")}>

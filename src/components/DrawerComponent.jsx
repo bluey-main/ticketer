@@ -71,6 +71,16 @@ const DrawerComponent = ({userName}) => {
           <Button
             variant="gradient"
             fullWidth
+            color="green"
+            className="h-16"
+            size="lg"
+            onClick={() => navigate('/contact')}
+          >
+            Destination
+          </Button>
+          <Button
+            variant="gradient"
+            fullWidth
             color="red"
             className="h-16"
             size="lg"

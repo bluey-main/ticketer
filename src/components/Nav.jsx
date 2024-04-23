@@ -48,6 +48,10 @@ const Nav = () => {
             <p>Contact Us</p>
           </li>
 
+          <li onClick={()=>navigate('/destination')}>
+            <p>Destination</p>
+          </li>
+
           <li>
             <Button
               variant="gradient"

@@ -75,7 +75,7 @@ const Register = () => {
                 label="Password"
                 size="lg"
               type={showPassword ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value.trim())}
               />
               <Button
                 size="sm"
@@ -94,7 +94,7 @@ const Register = () => {
               size="lg"
               type={showConfirmPassword ? "text" : "password"}
 
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value.trim())}
             />
               <Button
                 size="sm"

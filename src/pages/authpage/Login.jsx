@@ -68,7 +68,7 @@ const Login = () => {
               label="Password"
               size="lg"
               type={showPassword ? "text" : "password"}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value.trim())}
             />
             <Button
               size="sm"

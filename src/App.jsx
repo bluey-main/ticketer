@@ -14,6 +14,7 @@ import Transactions from "./pages/Transactions";
 import Busdetails from "./pages/Busdetails";
 import PrivateAdminRoute from "./pages/authpage/PrivateAdminRoute";
 import Contact from "./pages/Contact";
+import Destination from "./pages/Destination";
 
 function App() {
   return (
@@ -36,6 +37,8 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/destination" element={<Destination />} />
+
               <Route path="/register" element={<Register />} />
               <Route path="/userdetails" element={<Userdetails />} />
               <Route path="/buses/:busId" element={<Busdetails />} />
