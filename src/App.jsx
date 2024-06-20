@@ -15,6 +15,7 @@ import Busdetails from "./pages/Busdetails";
 import PrivateAdminRoute from "./pages/authpage/PrivateAdminRoute";
 import Contact from "./pages/Contact";
 import Destination from "./pages/Destination";
+import ForgotPassword from "./pages/authpage/ForgotPassword";
 
 function App() {
   return (
@@ -38,7 +39,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/destination" element={<Destination />} />
-
+              <Route path="/resetpassword" element={<ForgotPassword />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userdetails" element={<Userdetails />} />
               <Route path="/buses/:busId" element={<Busdetails />} />
