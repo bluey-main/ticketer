@@ -28,7 +28,7 @@ const Nav = () => {
     logOut();
   };
   return (
-    <nav className="w-full h-16 bg-black flex sticky top-0 z-50">
+    <nav className="w-full h-16 bg-primary-color flex sticky top-0 z-50">
       <div className="w-[20%] h-full bg-orange-2 flex items-center pl-10">
         <h1
           className="text-3xl text-white cursor-pointer"

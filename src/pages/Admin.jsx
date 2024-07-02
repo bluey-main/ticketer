@@ -124,7 +124,7 @@ const BusList = () => {
     <div className="w-full lg:h-[80vh] overflow-y-auto  bg-orange-2 flex lg:flex-row flex-col flex-wrap  lg:gap-x-8 gap-y-8 lg:gap-y-8 lg:items-start lg:justify-start items-center justify-center pt-6 lg:pt-0">
       {busList.map((bus, index) => (
         <div
-          className="lg:w-52 w-full h-52  cursor-pointer hover:translate-y-[-2rem] hover:shadow-2xl bg-black bg-green-3 rounded-lg overflow-hidden"
+          className="lg:w-52 w-full h-52  cursor-pointer hover:translate-y-[-2rem] hover:shadow-2xl bg-primary-color bg-green-3 rounded-lg overflow-hidden"
           style={{
             transition: "ease-in-out",
             transitionDuration: "0.3s",
@@ -303,7 +303,7 @@ const BusSettings = () => {
         <div className="w-1/2 h-full bg-orange-6 flex justify-end items-center">
           <Button
             variant="gradient"
-            color="black"
+            color="#57ba4a"
             size="lg"
             onClick={() => handleOpen()}
           >
@@ -335,7 +335,7 @@ const BusSettings = () => {
                 <td className="text-center">
                   <Button
                     variant="gradient"
-                    color="black"
+                    color="#57ba4a"
                     className="h-4 text-[0.7rem] text-center flex justify-center items-center mr-3 mb-5"
                     onClick={() => handleOpenEdit(bus.id)}
                   >
@@ -344,7 +344,7 @@ const BusSettings = () => {
 
                   <Button
                     variant="gradient"
-                    color="black"
+                    color="#57ba4a"
                     className="h-4 text-[0.7rem] text-center flex justify-center items-center mr-3 mb-5"
                     onClick={() => deactivateBus(bus.id, bus.deactivated)}
                   >

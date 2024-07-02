@@ -146,7 +146,7 @@ const Register = () => {
           </div>
         </div>
 
-        <div className="w-1/2 lg:flex hidden h-full bg-black justify-center items-center oveflow-hidden">
+        <div className="w-1/2 lg:flex hidden h-full bg-primary-color justify-center items-center oveflow-hidden">
           <Lottie
             play
             animationData={loginani}

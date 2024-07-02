@@ -22,7 +22,7 @@ const Userdetails = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  // const [address, setAddress] = useState("");
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -48,7 +48,6 @@ const Userdetails = () => {
           if (
             data["first_name"] != null ||
             data["last_name"] != null ||
-            data["address"] != null ||
             data["phone"] != null
           ) {
             // Navigate to Userdetails component if first name is missing
@@ -74,7 +73,6 @@ const Userdetails = () => {
         first_name: firstName,
         last_name: lastName,
         phone: phone,
-        address: address,
       };
       const containsNumber = /\d/.test(firstName) || /\d/.test(lastName);
       if (
@@ -85,9 +83,8 @@ const Userdetails = () => {
         containsNumber ||
         lastName.length < 3 ||
         phone === "" ||
-        phone.length !== 11 ||
-        address === "" ||
-        address.length < 3
+        phone.length !== 11 
+
       ) {
         toast.error("Fill All Fields Correctly");
         return;
@@ -150,11 +147,11 @@ const Userdetails = () => {
               }
             }}
           />
-          <Input
+          {/* <Input
             label="Address"
             size="lg"
             onChange={(e) => setAddress(e.target.value)}
-          />
+          /> */}
 
           {/* <div className="-ml-2.5">
       <Checkbox label="Remember Me" />

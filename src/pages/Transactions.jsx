@@ -115,7 +115,7 @@ const Transactions = () => {
               >
                 <td className="lg:flex hidden items-center gap-x-2">
                   {" "}
-                  <div className="h-[50%] p-3 text-white bg-black rounded-lg">
+                  <div className="h-[50%] p-3 text-white bg-primary-color rounded-lg">
                     {" "}
                     <GrTransaction />
                   </div>{" "}

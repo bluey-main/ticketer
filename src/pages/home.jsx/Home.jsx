@@ -102,7 +102,6 @@ const Home = () => {
           if (
             data["first_name"] == null ||
             data["last_name"] == null ||
-            data["address"] == null ||
             data["phone"] == null
           ) {
             navigate("/userdetails");
@@ -326,7 +325,7 @@ const Home = () => {
               </p>
             </div>
           </div>
-          <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[75%] bg-black absolute lg:bottom-36 bottom-10 lg:flex-row flex-col  flex p-5 rounded-lg">
+          <div className="lg:w-[80%] w-[90%] lg:h-1/2 h-[75%] shadow-2xl bg-primary-color absolute lg:bottom-36 bottom-10 lg:flex-row flex-col  flex p-5 rounded-lg">
             <div className="lg:w-[40%] w-full h-full bg-red-3 p-4 flex justify-center items-center flex-col gap-y-7  lg:border-r lg:border-r-white  ">
               <Select
                 label="Destination"
@@ -369,7 +368,7 @@ const Home = () => {
                   </p>
                   <p className="text-xl ">&#8358; {paystackAmount}</p>
                 </div>
-                <div className="lg:w-1/2 w-full lg:h-full px-4 bg-green-200 flex flex-col justify-center items-center text-black rounded-lg lg:border-l lg:border-l-white">
+                <div className="lg:w-1/2 w-full lg:h-full px-4 bg-secondary-color flex flex-col justify-center items-center text-white rounded-lg lg:border-l lg:border-l-white">
                   <p className="lg:text-xl text-lg text-center font-bold">
                     Departure Time
                   </p>

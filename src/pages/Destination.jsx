@@ -29,7 +29,7 @@ const Destination = () => {
     <>
       <DrawerComponent userName={""} />
       <Nav />
-      <div className="w-full h-screen bg-black pt-6">
+      <div className="w-full h-screen bg-white pt-6">
         <table className="border-none">
             <thead className="text-white [&>td]:text-center ">
                 <tr className="[&>td]:text-center lg:[&>td]:text-xl [&>td]:font-bold [&>td]:border-none">
@@ -38,10 +38,10 @@ const Destination = () => {
                 <td>Departure Time</td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody >
                 {busList.map((bus) => (
                     bus.deactivated === false ?
-                        <tr className="[&>td]:text-center lg:[&>td]:p-10 lg:[&>td]:text-base [&>td]:text-sm [&>td]:bg-white lg:[&>td]:border-[50px] [&>td]:border-black   [&>td]:font-bold" key={bus.id}>
+                        <tr className="[&>td]:text-center lg:[&>td]:p-5 odd:bg-primary-color odd:text-white lg:[&>td]:text-base [&>td]:text-sm lg:[&>td]:border-[50px] [&>td]:border-white   [&>td]:font-bold" key={bus.id}>
                         <td>{bus.name}</td>
                         <td>{bus.price}</td>
                         <td>{bus.departure}</td>

@@ -65,7 +65,7 @@ const ForgotPassword = () => {
             <Input
               label="Email Address"
               color="black"
-              className="disabled:bg-black disabled:border-0"
+              className="disabled:bg-primary-color disabled:border-0"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -78,7 +78,7 @@ const ForgotPassword = () => {
 }
       </div>
       
-      <div className={`w-1/2 h-full bg-black  transition ease-in-out delay-1000  justify-center items-center p-20 lg:${sent ? "hidden" : "flex" } hidden`}>
+      <div className={`w-1/2 h-full bg-primary-color  transition ease-in-out delay-1000  justify-center items-center p-20 lg:${sent ? "hidden" : "flex" } hidden`}>
         <Lottie play animationData={pwdani} loop />
       </div>
 

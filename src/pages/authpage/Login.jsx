@@ -125,7 +125,7 @@ const Login = () => {
        
       </div>
 
-      <div className="w-1/2 lg:flex hidden h-full bg-black justify-center items-center oveflow-hidden">
+      <div className="w-1/2 lg:flex hidden h-full bg-primary-color justify-center items-center oveflow-hidden">
 
               <Lottie play animationData={loginani} loop className="w-[90%] h-[90%]"/>
       </div>

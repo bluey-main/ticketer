@@ -130,7 +130,7 @@ const Contact = () => {
           </div>
         </div>
       </div>
-      <div className="lg:w-[40%] w-full lg:h-full h-1/2 bg-black p-10 text-white rounded-3xl flex justify-center items-center flex-col">
+      <div className="lg:w-[40%] w-full lg:h-full h-1/2 bg-primary-color p-10 text-white rounded-3xl flex justify-center items-center flex-col">
         <div className="w-full h-[20%] bg-red-3 flex items-center lg:mb-0 mb-7">
           <Typography className="lg:text-4xl text-2xl  font-medium">Contact Us</Typography>
         </div>

@@ -101,7 +101,7 @@ const Busdetails = () => {
                 (todayDate == receipt.date)?
                 <tr key={receipt.id}>
                   <td className="flex  items-center gap-x-2">
-                    <div className="h-[50%] p-3 text-white bg-black rounded-lg">
+                    <div className="h-[50%] p-3 text-white bg-primary-color rounded-lg">
                       <CgProfile />
                     </div>
                     <p>{receipt.name}</p>
